@@ -28,7 +28,8 @@
         {
           "cameraPermission": "Permitir que la app use la cámara para escanear códigos de barras de tus productos."
         }
-      ]
+      ],
+      "expo-status-bar"
     ]
   }
 }

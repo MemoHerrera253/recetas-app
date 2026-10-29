@@ -3,20 +3,34 @@ import { initializeAuth, getReactNativePersistence, getAuth } from 'firebase/aut
 import { getFirestore } from 'firebase/firestore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const app = getApps().length
-  ? getApp()
-  : initializeApp({
-      apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
-      authDomain: process.env.EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN,
-      projectId: process.env.EXPO_PUBLIC_FIREBASE_PROJECT_ID,
-      appId: process.env.EXPO_PUBLIC_FIREBASE_APP_ID,
-    });
+const firebaseConfig = {
+  apiKey: 'AIzaSyA6SvYYsdGhNM3_mei0zplcN6hJ5cUbi1Y',
+  authDomain: 'apprecetas-b2ef2.firebaseapp.com',
+  projectId: 'apprecetas-b2ef2',
+  appId: '1:330270253407:web:23c7e6829cb4dcc45bd6ea',
+};
+
+const faltantes = Object.entries(firebaseConfig)
+  .filter(([, valor]) => !valor)
+  .map(([clave]) => clave);
+
+if (faltantes.length > 0) {
+  throw new Error(
+    `Faltan valores de Firebase (${faltantes.join(', ')}). Revisa el archivo .env y reinicia con: npx expo start -c`
+  );
+}
+
+const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 
 let auth;
 try {
   auth = initializeAuth(app, { persistence: getReactNativePersistence(AsyncStorage) });
-} catch {
-  auth = getAuth(app); // ya estaba inicializado (recarga rápida)
+} catch (e) {
+  if (e.code === 'auth/already-initialized') {
+    auth = getAuth(app);
+  } else {
+    throw e;
+  }
 }
 
 export { auth };

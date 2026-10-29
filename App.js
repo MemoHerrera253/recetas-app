@@ -9,12 +9,7 @@ import LoginScreen from './src/views/LoginScreen';
 import RegistroScreen from './src/views/RegistroScreen';
 import AvisoPrivacidadScreen from './src/views/AvisoPrivacidadScreen';
 import HomeScreen from './src/views/HomeScreen';
-
 import AgregarIngredienteScreen from './src/views/AgregarIngredienteScreen';
-
-// dentro del Stack.Navigator:
-<Stack.Screen name="AgregarIngrediente" component={AgregarIngredienteScreen}
-  options={{ title: 'Agregar ingrediente' }} />
 
 const Stack = createNativeStackNavigator();
 
@@ -57,6 +52,8 @@ export default function App() {
         <Stack.Screen name="AvisoPrivacidad" component={AvisoPrivacidadScreen} options={{ title: 'Aviso de privacidad' }} />
         <Stack.Screen name="Home" component={HomeScreen} initialParams={{ usuario }}
           options={{ title: 'Inicio', headerBackVisible: false }} />
+        <Stack.Screen name="AgregarIngrediente" component={AgregarIngredienteScreen}
+          options={{ title: 'Agregar ingrediente' }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
